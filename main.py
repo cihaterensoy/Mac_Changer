@@ -2,15 +2,17 @@ import subprocess  # shellde komut çalıştırmaya yarayan bir kütüphane
 import argparse
 import random
 
-class MAC_Changer():
+
+class MAC_Changer:
+
 
     def parseinfo(self):
-        #kullanıcıdan parametre almamızı sağlar
+        # kullanıcıdan parametre almamızı sağlar
         parse_o = argparse.ArgumentParser()
         # dest = argümanı nesnenin hangi özelliğine atayacağımızı söyler
         parse_o.add_argument("-i", "--interface", dest="interface", help="please enter the interface")
 
-        self.data = parse_o.parse_args() #alınan parametrelerin herbirini bir değere atıyoruz
+        self.data = parse_o.parse_args()  # alınan parametrelerin herbirini bir değere atıyoruz
 
         return self.data
 
@@ -26,16 +28,14 @@ class MAC_Changer():
 
         return self.hex_sutun
 
-
     def Change_mac(self):
-        #shellde istediğimiz komutları çalıştırmamıza yarar
+        # shellde istediğimiz komutları çalıştırmamıza yarar
         subprocess.call(["ifconfig", self.data.interface, "down"])
         subprocess.call(["ifconfig", self.data.interface, "hw", "ether", self.hex_sutun])
         subprocess.call(["ifconfig", self.data.interface, "up"])
 
 
-
-if __name__ == "__main__": #çağrılan dosya main olduğu sürece çalıştır
+if __name__ == "__main__":  # çağrılan dosya main olduğu sürece çalıştır
     mac_changer = MAC_Changer()
     mac_changer.parseinfo()
     mac_changer.random_mac()
