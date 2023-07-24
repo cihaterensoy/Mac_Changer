@@ -18,15 +18,19 @@ class MAC_Changer:
 
     def random_mac(self):
         # random bir şekilde mac adresi oluşturacağız
+        # ilk ikili çift olmalı
         hex_number = "0123456789ABCDEF"
         self.hex_sutun = ""
         for i in range(6):
             for j in range(2):
                 self.hex_sutun = self.hex_sutun + random.choice(hex_number)
+            if i == 0:
+                if int(self.hex_sutun, 16) % 2 == 1: #string ifadeyi 16lık tabanda sayı olarak int ifadeye ceviriyoruz
+                    return self.random_mac()
             if i < 5:
                 self.hex_sutun = self.hex_sutun + ":"
 
-        return self.hex_sutun
+
 
     def Change_mac(self):
         # shellde istediğimiz komutları çalıştırmamıza yarar
